@@ -13,7 +13,7 @@ public:
 
     file_export_c(const string& new_file_name, shared_ptr<table_c> new_table_src);
 
-    virtual bool export() = 0;
+    virtual void export() = 0;
 
 protected:
 
@@ -28,7 +28,7 @@ public:
 
     file_CSV_c(const string& new_file_name, shared_ptr<table_c> new_table_src);
 
-    bool export() override;
+    void export() override;
 };
 
 class file_XML_c : public file_export_c{
@@ -38,7 +38,7 @@ public:
 
     file_XML_c(const string& new_file_name, shared_ptr<table_c> new_table_src);
 
-    bool export() override;
+    void export() override;
 };
 
 class file_JSON_c : public file_export_c{
@@ -48,7 +48,7 @@ public:
 
     file_JSON_c(const string& new_file_name, shared_ptr<table_c> new_table_src);
 
-    bool export() override;
+    void export() override;
 };
 
 #endif /* FILE_EXPORT_H */
