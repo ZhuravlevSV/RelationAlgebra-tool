@@ -106,6 +106,10 @@ table_c::~table_c() {
     }
 }
 
+string table_c::get_name() const{
+    return name;
+}
+
 vector<header_cell_c> table_c::get_header() const{
     return header;
 }

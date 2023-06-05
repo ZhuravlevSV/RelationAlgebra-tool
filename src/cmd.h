@@ -3,6 +3,7 @@
 
 #include "config.h"
 #include "tables.h"
+#include "file_export.h"
 
 using namespace std;
 

@@ -29,6 +29,8 @@ public:
 
     ~table_c();
 
+    string get_name() const;
+
     vector<header_cell_c> get_header() const;
 
     void set_header(const vector<header_cell_c>& new_header);
