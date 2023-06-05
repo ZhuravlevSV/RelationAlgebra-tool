@@ -78,7 +78,47 @@ file_XML_c::file_XML_c(const string& new_file_name, shared_ptr<table_c> new_tabl
     : file_export_c(new_file_name, new_table_src) {}
 
 void file_XML_c::export_file(){
-    cout << "EXPORT XML FILE" << endl;
+    // rewrite if exist file
+    if(filesystem::exists(SAVED_FILES_FOLDER + file_name + ".xml"))
+        cout << NOTE_TEXT << ": " << UNDERLINE_FONT << SAVED_FILES_FOLDER + file_name + ".xml" << RESET_FONT << " already exist, rewrite..." << endl;
+    
+    // open files
+    ifstream ifs(BUFFER_FOLDER + table_src->get_name());
+    if(!ifs.is_open()){
+        cout << ERROR_TEXT << ": can't open input file" << endl;
+        return;
+    }
+    ofstream ofs(SAVED_FILES_FOLDER + file_name + ".xml");
+    if(!ofs.is_open()){
+        ifs.close();
+        cout << ERROR_TEXT << ": can't open output file" << endl;
+        return;
+    }
+
+    // fill XML file
+    ofs << "<?xml version=\"1.0\" encoding=\"UTF-8\"?>" << endl;
+    ofs << "<" << table_src->get_name() << ">" << endl;
+
+    vector<header_cell_c> src_header = table_src->get_header();
+    string ifs_line;
+    while(getline(ifs, ifs_line)){
+        ofs << "  <item>" << endl;
+        vector<header_cell_c>::iterator it_src_header = src_header.begin();
+        stringstream ss_line(ifs_line);
+        string word;
+        while(getline(ss_line, word, ',')){
+            ofs << "    <" << (*it_src_header).name << ">" << word << "</" << (*it_src_header).name << ">" << endl;
+            it_src_header++;
+        }
+        ofs << "  </item>" << endl;
+    }
+    ofs << "</" << table_src->get_name() << ">" << endl;
+
+
+    ifs.close();
+    ofs.close();
+
+    cout << SUCCESS_TEXT << ": table has been exported to " << UNDERLINE_FONT << SAVED_FILES_FOLDER + file_name + ".xml" << RESET_FONT << endl;
 }
 
 // ===================================================================

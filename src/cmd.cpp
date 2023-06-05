@@ -23,13 +23,14 @@ bool cmd_ra_import_c::run(tables_c& tables){
         string table_dst_file_address = match[2];
 
         if(!tables.add_table_from_workspace(table_dst_name, table_dst_file_address)){
-            cout << WARNING_TEXT << ": " << UNDERLINE_FONT << "IMPORT" << RESET_FONT << " aborted" << endl;
+            cout << WARNING_TEXT << ": " << UNDERLINE_FONT << table_dst_name << RESET_FONT << " can't be added" << endl;
             return false;
         }
 
         return true;
     }
 
+    cout << WARNING_TEXT << ": " << UNDERLINE_FONT << "IMPORT" << RESET_FONT << " aborted" << endl;
     return false;
 }
 
@@ -42,7 +43,7 @@ cmd_ra_export_c::cmd_ra_export_c(const string& new_cmd_text)
 
 bool cmd_ra_export_c::run(tables_c& tables) {
     regex export_regex("\\s*EXPORT\\s*(\\w+)\\s*\"(\\w+)\\.(\\w+)\"\\s*");
-    smatch match;
+    match_results<string::const_iterator> match;
 
     // compare request
     if (regex_search(cmd_text, match, export_regex) && match.size() == 4) {
