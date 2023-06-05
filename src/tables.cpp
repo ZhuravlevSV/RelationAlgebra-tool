@@ -110,6 +110,10 @@ string table_c::get_name() const{
     return name;
 }
 
+void table_c::set_name(const string& new_name){
+    name = new_name;
+}
+
 vector<header_cell_c> table_c::get_header() const{
     return header;
 }
@@ -172,6 +176,22 @@ bool tables_c::add_table_from_workspace(const string& new_name, const string& fi
     }catch(const logic_error& ex){
         return false;
     }
+
+    return true;
+}
+
+bool tables_c::add_table(const string& table_name, const vector<header_cell_c>& table_header){
+    // find same table
+    if(get_table(table_name) != nullptr){
+        cout << WARNING_TEXT << ": this " << UNDERLINE_FONT << table_name << RESET_FONT << " table already exist" << endl;
+        return false;
+    }
+
+    // create and add table to tables
+    shared_ptr<table_c> new_table = make_shared<table_c>();
+    new_table->set_name(table_name);
+    new_table->set_header(table_header);
+    tables_map.insert(make_pair(table_name, new_table));
 
     return true;
 }

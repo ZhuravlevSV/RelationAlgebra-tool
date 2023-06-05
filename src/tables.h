@@ -31,6 +31,8 @@ public:
 
     string get_name() const;
 
+    void set_name(const string& new_name);
+
     vector<header_cell_c> get_header() const;
 
     void set_header(const vector<header_cell_c>& new_header);
@@ -52,6 +54,8 @@ public:
     tables_c();
 
     bool add_table_from_workspace(const string& new_name, const string& file_address);
+
+    bool add_table(const string& table_name, const vector<header_cell_c>& table_header);
 
     const shared_ptr<table_c> get_table(const string& name);
 
