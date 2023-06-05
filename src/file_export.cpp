@@ -3,6 +3,8 @@
 unique_ptr<file_export_c> file_factory::create_file_export(const string& file_format, const string& file_name, shared_ptr<table_c> table_src) {
     map<string, formats> text_formats = {{"csv", formats::CSV}, {"xml", formats::XML}, {"json", formats::JSON}};
     auto it_format = text_formats.find(file_format);
+    if(it_format == text_formats.end())
+        return nullptr;
 
     switch (it_format->second) {
         case formats::CSV:
@@ -129,5 +131,85 @@ file_JSON_c::file_JSON_c(const string& new_file_name, shared_ptr<table_c> new_ta
     : file_export_c(new_file_name, new_table_src) {}
 
 void file_JSON_c::export_file(){
-    cout << "EXPORT JSON FILE" << endl;
+    // rewrite if exist file
+    if(filesystem::exists(SAVED_FILES_FOLDER + file_name + ".json"))
+        cout << NOTE_TEXT << ": " << UNDERLINE_FONT << SAVED_FILES_FOLDER + file_name + ".json" << RESET_FONT << " already exist, rewrite..." << endl;
+    
+    // open files
+    ifstream ifs(BUFFER_FOLDER + table_src->get_name());
+    if(!ifs.is_open()){
+        cout << ERROR_TEXT << ": can't open input file" << endl;
+        return;
+    }
+    ofstream ofs(SAVED_FILES_FOLDER + file_name + ".json");
+    if(!ofs.is_open()){
+        ifs.close();
+        cout << ERROR_TEXT << ": can't open output file" << endl;
+        return;
+    }
+
+    // fill JSON file
+    ofs << "{" << endl;
+    ofs << "  \"table_name\": \"" << table_src->get_name() << "\"," << endl;
+    ofs << "  \"columns\": [" << endl;
+
+    // fill header
+    vector<header_cell_c> header_src = table_src->get_header();
+    for(size_t index = 0; index < header_src.size(); index++){
+        ofs << "    {" << endl;
+        ofs << "      \"name\": \"" << header_src.at(index).name << "\"," << endl;
+        ofs << "      \"type\": \"" << (header_src.at(index).type == header_cell_c::type_e::FLOAT ? "float" : "string" ) << "\"" << endl;
+        ofs << "    }";
+        if(index == header_src.size() - 1)
+            ofs << endl;
+        else
+            ofs << "," << endl;
+    }
+    ofs << "  ]," << endl;
+    
+    // fill body
+    ofs << "  \"rows\": [" << endl;
+
+    string ifs_line;
+    bool first = true;
+    while(getline(ifs, ifs_line)){
+        if(!first)
+            ofs << "    }," << endl;
+        first = false;
+        ofs << "    {" << endl;
+        
+
+        vector<header_cell_c>::iterator it_src_header = header_src.begin();
+        vector<string> words;
+        stringstream ss_line(ifs_line);
+        string word;
+        while(getline(ss_line, word, ','))
+            words.push_back(word);
+        
+        for(size_t index = 0; index < words.size(); index++){
+            ofs << "      \"" << it_src_header->name << "\": ";
+
+            // \"" << words.at(index) << "\"";
+            if(it_src_header->type == header_cell_c::type_e::FLOAT)
+                ofs << words.at(index);
+            else
+                ofs << "\"" << words.at(index) << "\"";
+
+            if(index == words.size() - 1)
+                ofs << endl;
+            else
+                ofs << "," << endl;
+            it_src_header++;
+        }
+        words.clear();
+    }
+    ofs << "    }" << endl;
+
+    ofs << "  ]" << endl;
+    ofs << "}" << endl;
+
+    ifs.close();
+    ofs.close();
+
+    cout << SUCCESS_TEXT << ": table has been exported to " << UNDERLINE_FONT << SAVED_FILES_FOLDER + file_name + ".json" << RESET_FONT << endl;
 }
