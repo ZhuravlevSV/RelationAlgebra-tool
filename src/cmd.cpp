@@ -68,6 +68,7 @@ bool cmd_ra_export_c::run(tables_c& tables) {
         return true;
     }
 
+    cout << WARNING_TEXT << ": " << UNDERLINE_FONT << "EXPORT" << RESET_FONT << " aborted" << endl;
     return false;
 }
 

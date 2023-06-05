@@ -177,7 +177,10 @@ bool tables_c::add_table_from_workspace(const string& new_name, const string& fi
 }
 
 const shared_ptr<table_c> tables_c::get_table(const string& name){
-    return tables_map.find(name)->second;
+    map<string, shared_ptr<table_c>>::const_iterator cit_table = tables_map.find(name);
+    if(cit_table == tables_map.end())
+        return nullptr;
+    return cit_table->second;
 }
 
 bool tables_c::print_table(const string& name) const{

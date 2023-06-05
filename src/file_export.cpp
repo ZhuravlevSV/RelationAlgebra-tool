@@ -32,6 +32,10 @@ file_CSV_c::file_CSV_c(const string& new_file_name, shared_ptr<table_c> new_tabl
 
 void file_CSV_c::export_file(){
 
+    // rewrite if exist file
+    if(filesystem::exists(SAVED_FILES_FOLDER + file_name + ".csv"))
+        cout << NOTE_TEXT << ": " << UNDERLINE_FONT << SAVED_FILES_FOLDER + file_name + ".csv" << RESET_FONT << " already exist, rewrite..." << endl;
+
     // open files
     ifstream ifs(BUFFER_FOLDER + table_src->get_name());
     if(!ifs.is_open()){
