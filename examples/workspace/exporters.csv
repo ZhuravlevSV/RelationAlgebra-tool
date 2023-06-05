@@ -1,0 +1,101 @@
+id,country,id_fruit
+1,United States,12
+2,Canada,2
+3,Australia,34
+4,Germany,8
+5,France,16
+6,Italy,1
+7,Spain,21
+8,United Kingdom,3
+9,Japan,9
+10,China,42
+11,Russia,25
+12,Brazil,6
+13,Mexico,31
+14,India,20
+15,South Korea,13
+16,South Africa,28
+17,Nigeria,19
+18,Argentina,4
+19,Colombia,5
+20,Peru,39
+21,Chile,11
+22,Sweden,18
+23,Norway,10
+24,Finland,15
+25,Switzerland,7
+26,Netherlands,23
+27,Belgium,27
+28,Austria,33
+29,Greece,14
+30,Denmark,26
+31,Ireland,37
+32,Portugal,30
+33,Czech Republic,38
+34,Poland,24
+35,Turkey,22
+36,Hungary,17
+37,New Zealand,35
+38,Israel,29
+39,Egypt,32
+40,Thailand,50
+41,Malaysia,48
+42,Singapore,43
+43,Indonesia,44
+44,Philippines,46
+45,Vietnam,47
+46,Saudi Arabia,49
+47,United Arab Emirates,40
+48,Qatar,41
+49,Kuwait,36
+50,Iran,45
+51,Ukraine,12
+52,Kazakhstan,2
+53,Belarus,34
+54,Switzerland,8
+55,Bulgaria,16
+56,Serbia,1
+57,Hungary,21
+58,Romania,3
+59,Poland,9
+60,Czech Republic,42
+61,Greece,25
+62,Finland,6
+63,Norway,31
+64,Denmark,20
+65,Sweden,13
+66,Ireland,28
+67,Netherlands,19
+68,Portugal,4
+69,Spain,5
+70,Italy,39
+71,France,11
+72,Germany,18
+73,Austria,10
+74,Slovakia,15
+75,Slovenia,7
+76,Croatia,23
+77,Bosnia and Herzegovina,27
+78,Montenegro,33
+79,Albania,14
+80,Macedonia,26
+81,Estonia,37
+82,Latvia,30
+83,Lithuania,38
+84,Russia,24
+85,Ukraine,22
+86,Belarus,17
+87,Moldova,35
+88,Georgia,29
+89,Armenia,32
+90,Azerbaijan,50
+91,Kazakhstan,48
+92,Uzbekistan,43
+93,Kyrgyzstan,44
+94,Tajikistan,46
+95,Turkmenistan,47
+96,Afghanistan,49
+97,Iran,40
+98,Iraq,41
+99,Syria,36
+100,Lebanon,45

@@ -69,7 +69,7 @@ void file_CSV_c::export_file(){
     ifs.close();
     ofs.close();
 
-    cout << SUCCESS_TEXT << ": table has been exported to " << UNDERLINE_FONT << file_name << RESET_FONT << endl;
+    cout << SUCCESS_TEXT << ": table has been exported to " << UNDERLINE_FONT << SAVED_FILES_FOLDER + file_name + ".csv" << RESET_FONT << endl;
 }
 
 // ===================================================================
