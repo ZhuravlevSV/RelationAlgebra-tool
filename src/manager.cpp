@@ -59,7 +59,7 @@ unique_ptr<cmd_c> manager_c::set_cmd(string& cmd_text){
     selector_c::format_e format = selector.define_format(cmd_text);
     selector_c::type_e type = selector.define_type(cmd_text);
 
-    // print
+    /*
     cout << "\t" << SUCCESS_TEXT << ": " << cmd_text << endl;
     switch (format){
     case selector_c::format_e::RA: cout << "\t" << NOTE_TEXT << ": FORMAT: RA" << endl; break;
@@ -81,6 +81,7 @@ unique_ptr<cmd_c> manager_c::set_cmd(string& cmd_text){
     case selector_c::type_e::UNDEFINED: cout << "\t" << ERROR_TEXT << ": TYPE: UNDEFINED" << endl; break;
     default: break;
     }
+    */
 
     return cmd_factory::create_cmd(format, type, cmd_text);
 }
