@@ -7,7 +7,10 @@ selector_c::format_e selector_c::define_format(string& cmd_text){
 
     // compare formats
     if(regex_search(cmd_text, match, sql_regex) && match.size() == 2){
-        cmd_text = match[1];
+        string new_cmd_text = match[1];
+        new_cmd_text += " ";
+        new_cmd_text += cmd_text.substr(match[0].length());
+        cmd_text = new_cmd_text;
         return selector_c::format_e::SQL;
     }
     if(regex_search(cmd_text, match, ra_regex) && match.size() == 2){

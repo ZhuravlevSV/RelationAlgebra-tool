@@ -129,6 +129,9 @@ bool cmd_ra_help_c::run(tables_c& tables){
         cout << BOLD_FONT << BLUE_COLOR << "|" << CYAN_COLOR << "|" << RESET_FONT << endl;
         cout << BOLD_FONT << BLUE_COLOR << "|" << CYAN_COLOR << "|" << RESET_FONT << "    To convert a query to SQL format, write the command" << endl;
         cout << BOLD_FONT << BLUE_COLOR << "|" << CYAN_COLOR << "|" << RESET_FONT << " " << BOLD_FONT << ">> " << YELLOW_COLOR << "TO SQL" << RESET_FONT << BOLD_FONT << " request" << RESET_FONT << endl;
+        cout << BOLD_FONT << BLUE_COLOR << "|" << CYAN_COLOR << "|" << RESET_FONT << endl;
+        cout << BOLD_FONT << BLUE_COLOR << "|" << CYAN_COLOR << "|" << RESET_FONT << "    To quit from application" << endl;
+        cout << BOLD_FONT << BLUE_COLOR << "|" << CYAN_COLOR << "|" << RESET_FONT << " " << BOLD_FONT << ">> " << YELLOW_COLOR << "CTRL" << RESET_FONT << BOLD_FONT << " + " << YELLOW_COLOR << "D" << RESET_FONT << endl;
         cout << endl;
         return true;
     }
@@ -144,11 +147,11 @@ cmd_ra_print_c::cmd_ra_print_c(const string& new_cmd_text)
     : cmd_c(new_cmd_text) {}
 
 bool cmd_ra_print_c::run(tables_c& tables){
-    regex import_regex("\\s*PRINT\\s*(\\w+)\\s*");
+    regex print_regex("\\s*PRINT\\s*(\\w+)\\s*");
     match_results<string::const_iterator> match;
 
     // compare request
-    if(regex_search(cmd_text, match, import_regex) && match.size() == 2){
+    if(regex_search(cmd_text, match, print_regex) && match.size() == 2){
         string table_name = match[1];
 
         if(cmd_text.substr(match[0].length()).find_first_not_of(" ") == string::npos){  
@@ -794,9 +797,42 @@ cmd_ra_multitask_c::cmd_ra_multitask_c(const string& new_cmd_text)
     : cmd_c(new_cmd_text) {}
 
 bool cmd_ra_multitask_c::run(tables_c& tables){
-    cout << "RA MULTITASK" << endl;
+    regex multitask_regex("\\s*MULTITASK\\s*(\\w+)\\s*FROM\\s*(.+)\\s*");
+    match_results<string::const_iterator> match;
 
-    return true;
+    // compare request
+    if(regex_search(cmd_text, match, multitask_regex) && match.size() == 3){
+        string table_dst_name = match[1];
+        string request = match[2];
+
+        for(size_t index = 0; index < request.length(); index++){
+            if(request[index] != ' ' && request[index] != '\t' && request[index] != '\n' && request[index] != '\r') break;
+            if(index == request.length() - 1){
+                cout << WARNING_TEXT << ": " << UNDERLINE_FONT << "MULTITASK" << RESET_FONT << " aborted" << endl;
+                return false;
+            }
+        }
+        
+        // try to find tables
+        shared_ptr<table_c> table_dst = tables.get_table(table_dst_name);
+        if(table_dst != nullptr){
+            cout << WARNING_TEXT << ": this " << UNDERLINE_FONT << table_dst_name << RESET_FONT << " already exist" << endl;
+            return false;
+        }
+
+        // try to solve multitask
+        multitask_ra_c multitask;
+        if(!multitask.solve(table_dst_name, request, tables)){
+            cout << WARNING_TEXT << ": " << UNDERLINE_FONT << "MULTITASK" << RESET_FONT << " aborted" << endl;
+            return false;
+        }
+
+        cout << SUCCESS_TEXT << ": table " << UNDERLINE_FONT << table_dst_name << RESET_FONT << " has been created by multitask" << endl;
+        return true;
+    }
+
+    cout << WARNING_TEXT << ": " << UNDERLINE_FONT << "MULTITASK" << RESET_FONT << " aborted" << endl;
+    return false;
 }
 
 // ======================================================================
@@ -808,9 +844,23 @@ cmd_sql_print_c::cmd_sql_print_c(const string& new_cmd_text)
     : cmd_c(new_cmd_text) {}
 
 bool cmd_sql_print_c::run(tables_c& tables){
-    cout << "SQL PRINT" << endl;
+    regex print_regex("\\s*PRINT\\s*(\\w+)\\s*");
+    match_results<string::const_iterator> match;
 
-    return true;
+    // compare request
+    if(regex_search(cmd_text, match, print_regex) && match.size() == 2){
+        string table_name = match[1];
+
+        // check if in request are 2 tables
+        if(cmd_text.substr(match[0].length()).find_first_not_of(" ") == string::npos){        
+            // print SQL
+            cout << endl << "SELECT * FROM " << table_name << ";" << endl << endl;
+            return true;
+        }
+    }
+
+    cout << WARNING_TEXT << ": " << UNDERLINE_FONT << "SQL PRINT" << RESET_FONT << " aborted" << endl;
+    return false;
 }
 
 // ==========================================

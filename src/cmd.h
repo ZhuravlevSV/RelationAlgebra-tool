@@ -4,6 +4,7 @@
 #include "config.h"
 #include "tables.h"
 #include "file_export.h"
+#include "multitask.h"
 
 using namespace std;
 
