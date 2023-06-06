@@ -13,6 +13,7 @@
 #include <memory>
 #include <deque>
 #include <filesystem>
+#include <cassert>
 
 // colored text
 #define TEXT_IS_COLORED true
