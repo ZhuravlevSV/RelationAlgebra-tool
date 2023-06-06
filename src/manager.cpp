@@ -59,36 +59,82 @@ bool manager_c::read_cmd(string& cmd_text){
 }
 
 unique_ptr<cmd_c> manager_c::set_cmd(string& cmd_text){
+
+    // define format and type of the command
     selector_c::format_e format = selector.define_format(cmd_text);
     selector_c::type_e type = selector.define_type(cmd_text);
 
-    /*
-    cout << "\t" << SUCCESS_TEXT << ": " << cmd_text << endl;
-    switch (format){
-    case selector_c::format_e::RA: cout << "\t" << NOTE_TEXT << ": FORMAT: RA" << endl; break;
-    case selector_c::format_e::SQL: cout << "\t" << NOTE_TEXT << ": FORMAT: SQL" << endl; break;
-    case selector_c::format_e::UNDEFINED: cout << "\t" << ERROR_TEXT << ": FORMAT: UNDEFINED" << endl; break;
-    default: break;
-    }
-    switch (type){
-    case selector_c::type_e::IMPORT: cout << "\t" << NOTE_TEXT << ": TYPE: IMPORT" << endl; break;
-    case selector_c::type_e::EXPORT: cout << "\t" << NOTE_TEXT << ": TYPE: EXPORT" << endl; break;
-    case selector_c::type_e::HELP: cout << "\t" << NOTE_TEXT << ": TYPE: HELP" << endl; break;
-    case selector_c::type_e::PRINT: cout << "\t" << NOTE_TEXT << ": TYPE: PRINT" << endl; break;
-    case selector_c::type_e::RENAME: cout << "\t" << NOTE_TEXT << ": TYPE: RENAME" << endl; break;
-    case selector_c::type_e::PROJECTION: cout << "\t" << NOTE_TEXT << ": TYPE: PROJECTION" << endl; break;
-    case selector_c::type_e::SELECTION: cout << "\t" << NOTE_TEXT << ": TYPE: SELECTION" << endl; break;
-    case selector_c::type_e::NATURAL_JOIN: cout << "\t" << NOTE_TEXT << ": TYPE: NATURAL JOIN" << endl; break;
-    case selector_c::type_e::JOIN: cout << "\t" << NOTE_TEXT << ": TYPE: JOIN" << endl; break;
-    case selector_c::type_e::MULTITASK: cout << "\t" << NOTE_TEXT << ": TYPE: MULTITASK" << endl; break;
-    case selector_c::type_e::UNDEFINED: cout << "\t" << ERROR_TEXT << ": TYPE: UNDEFINED" << endl; break;
-    default: break;
-    }
-    */
-
+    // set command
     return cmd_factory::create_cmd(format, type, cmd_text);
 }
 
 tables_c& manager_c::get_tables(){
     return tables;
+}
+
+// ===============================================
+
+unique_ptr<cmd_c> cmd_factory::create_cmd(selector_c::format_e format, selector_c::type_e type, const string& cmd_text){
+    switch(type){
+    case selector_c::type_e::HELP:
+        if(format == selector_c::format_e::RA)
+            return make_unique<cmd_ra_help_c>(cmd_text);
+        else{
+            cout << WARNING_TEXT << ": Unknown command" << endl;
+            return nullptr;
+        }
+    case selector_c::type_e::IMPORT:
+        if(format == selector_c::format_e::RA)
+            return make_unique<cmd_ra_import_c>(cmd_text);
+        else{
+            cout << WARNING_TEXT << ": Unknown command" << endl;
+            return nullptr;
+        }
+    case selector_c::type_e::EXPORT:
+        if(format == selector_c::format_e::RA)
+            return make_unique<cmd_ra_export_c>(cmd_text);
+        else{
+            cout << WARNING_TEXT << ": Unknown command" << endl;
+            return nullptr;
+        }
+    case selector_c::type_e::PRINT:
+        if(format == selector_c::format_e::RA)
+            return make_unique<cmd_ra_print_c>(cmd_text);
+        else
+            return make_unique<cmd_sql_print_c>(cmd_text);
+    case selector_c::type_e::RENAME:
+        if(format == selector_c::format_e::RA)
+            return make_unique<cmd_ra_rename_c>(cmd_text);
+        else
+            return make_unique<cmd_sql_rename_c>(cmd_text);
+    case selector_c::type_e::PROJECTION:
+        if(format == selector_c::format_e::RA)
+            return make_unique<cmd_ra_projection_c>(cmd_text);
+        else
+            return make_unique<cmd_sql_projection_c>(cmd_text);
+    case selector_c::type_e::SELECTION:
+        if(format == selector_c::format_e::RA)
+            return make_unique<cmd_ra_selection_c>(cmd_text);
+        else
+            return make_unique<cmd_sql_selection_c>(cmd_text);
+    case selector_c::type_e::NATURAL_JOIN:
+        if(format == selector_c::format_e::RA)
+            return make_unique<cmd_ra_natural_join_c>(cmd_text);
+        else
+            return make_unique<cmd_sql_natural_join_c>(cmd_text);
+    case selector_c::type_e::JOIN:
+        if(format == selector_c::format_e::RA)
+            return make_unique<cmd_ra_join_c>(cmd_text);
+        else
+            return make_unique<cmd_sql_join_c>(cmd_text);
+    case selector_c::type_e::MULTITASK:
+        if(format == selector_c::format_e::RA)
+            return make_unique<cmd_ra_multitask_c>(cmd_text);
+        else
+            return make_unique<cmd_sql_multitask_c>(cmd_text);
+    
+    default:
+        cout << WARNING_TEXT << ": Unknown command" << endl;
+        return nullptr;
+    }
 }

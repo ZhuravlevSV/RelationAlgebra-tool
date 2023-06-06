@@ -44,11 +44,10 @@ void app_c::launch(){
 
         // create command
         unique_ptr<cmd_c> cmd = manager.set_cmd(cmd_text);
-        if(cmd == nullptr){ cout << WARNING_TEXT << ": unknown command" << endl; continue; }
+        if(cmd == nullptr) continue;
 
         cmd->run(manager.get_tables());
     }
-
 
     // end program
     print_finish();

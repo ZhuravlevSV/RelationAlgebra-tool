@@ -68,9 +68,4 @@ private:
     vector<string> tables_stack;
 };
 
-
-
-
-
-
 #endif /* MULTITASK_H */
