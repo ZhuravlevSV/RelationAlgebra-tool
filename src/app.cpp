@@ -3,6 +3,9 @@
 
 
 void app_c::print_start(){
+    cout << endl;
+    cout << GREEN_COLOR << "========================================================================================================" << RESET_FONT << endl;
+    cout << endl;
     cout << NOTE_TEXT << ": Program started!" << endl;
     cout << NOTE_TEXT << ": Write " << BOLD_FONT << "HELP" << RESET_FONT << " to see possible commands" << endl;
 }
