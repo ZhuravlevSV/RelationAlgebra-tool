@@ -63,8 +63,8 @@ doc : Doxyfile
 	mv $(PREF_DOC_SRC)* $(PREF_DOC_DEST)
 	rm -r $(PREF_DOC_SRC)
 
-clean :
-	rm $(TARGET) $(PREF_OBJ)*.o $(PREF_DEP)*.d
-
 #clean :
-#	rm $(TARGET) $(PREF_OBJ)*.o $(PREF_OBJ)commands/ra/*.o $(PREF_DEP)*.d $(PREF_DEP)commands/ra/*.d
+#	rm $(TARGET) $(PREF_OBJ)*.o $(PREF_DEP)*.d
+
+clean :
+	rm $(TARGET) $(PREF_OBJ)*.o $(PREF_OBJ)commands/ra/*.o $(PREF_OBJ)commands/sql/*.o $(PREF_DEP)*.d $(PREF_DEP)commands/ra/*.d $(PREF_DEP)commands/sql/*.d
