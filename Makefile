@@ -8,6 +8,8 @@ PREF_DOC = ./doc/
 PREF_DEP = ./src/dep/
 PREF_DOC_SRC = ./doc/html/
 PREF_DOC_DEST = $(PREF_DOC)
+PREF_DEP_RA = $(PREF_DEP)commands/ra/
+PREF_DEP_SQL = $(PREF_DEP)commands/sql/
 
 SRC = $(wildcard $(PREF_SRC)*.cpp)
 OBJ = $(patsubst $(PREF_SRC)%.cpp, $(PREF_OBJ)%.o, $(SRC))
@@ -31,13 +33,13 @@ $(PREF_OBJ)%.o : $(PREF_SRC)%.cpp
 	@if [ ! -d "$(PREF_OBJ)" ]; then mkdir -p $(PREF_OBJ); fi
 	$(CC) -c $< -o $@
 
-$(PREF_OBJ)commands/ra/%.o : $(PREF_SRC)commands/ra/%.cpp
-	@if [ ! -d "$(PREF_OBJ)commands/ra" ]; then mkdir -p $(PREF_OBJ)commands/ra; fi
-	$(CC) -c $< -o $@
+$(PREF_DEP_RA)%.d : $(PREF_SRC)commands/ra/%.cpp
+	@if [ ! -d "$(PREF_DEP_RA)" ]; then mkdir -p $(PREF_DEP_RA); fi
+	$(CC) -MM -MT '$(PREF_OBJ)$*.o' $< -MF $@
 
-$(PREF_OBJ)commands/sql/%.o : $(PREF_SRC)commands/sql/%.cpp
-	@if [ ! -d "$(PREF_OBJ)commands/sql" ]; then mkdir -p $(PREF_OBJ)commands/sql; fi
-	$(CC) -c $< -o $@
+$(PREF_DEP_SQL)%.d : $(PREF_SRC)commands/sql/%.cpp
+	@if [ ! -d "$(PREF_DEP_SQL)" ]; then mkdir -p $(PREF_DEP_SQL); fi
+	$(CC) -MM -MT '$(PREF_OBJ)$*.o' $< -MF $@
 
 $(PREF_DEP)%.d : $(PREF_SRC)%.cpp
 	@if [ ! -d "$(PREF_DEP)" ]; then mkdir -p $(PREF_DEP); fi
@@ -45,6 +47,8 @@ $(PREF_DEP)%.d : $(PREF_SRC)%.cpp
 
 
 -include $(DEP)
+-include $(DEP_RA)
+-include $(DEP_SQL)
 
 all : $(TARGET)
 
