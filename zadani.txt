@@ -14,4 +14,5 @@ Dále aplikace musí zpracovávat výrazy dle jednoho z následujících princip
 	7) Množinové operace (alespoň sjednocení, průnik, rozdíl a kartézský součin) musí jít vnořovat pomocí závorek
 
 Kde lze využít polymorfismus?
-	8) formáty importu a exportu: CSV, XML
+	8) Commands in RA and SQL
+	9) Formáty importu a exportu: CSV, XML, JSON

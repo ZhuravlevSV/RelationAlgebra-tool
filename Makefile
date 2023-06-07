@@ -52,8 +52,8 @@ $(PREF_DEP)%.d : $(PREF_SRC)%.cpp
 
 all : $(TARGET)
 
-compile : $(OBJ)
-	$(CC) $(OBJ) -o $(TARGET)
+compile : $(OBJ) $(OBJ_RA) $(OBJ_SQL)
+	$(CC) $(OBJ) $(OBJ_RA) $(OBJ_SQL) -o $(TARGET)
 
 run : $(TARGET)
 	./$(TARGET)
