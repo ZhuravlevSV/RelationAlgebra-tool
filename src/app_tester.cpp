@@ -102,8 +102,10 @@ void app_tester_c::launch(){
     cout << endl << NOTE_TEXT << ": " << UNDERLINE_FONT << "PRINT" << RESET_FONT << " tester errors started" << endl << endl;
         // ERRORS
     cmd_ok_work_er("PRINT");
+    cmd_ok_work_er("     PRINT");
     cmd_ok_work_er("PRINT   ");
     cmd_ok_work_er("PRINT   fruits exporters");
+    cmd_ok_work_er("PRINT   not_existing_table");
     cout << endl << SUCCESS_TEXT << ": " << UNDERLINE_FONT << "PRINT" << RESET_FONT << " working correctly!" << endl;
     cout << GREEN_COLOR << "========================================================================================================" << RESET_FONT << endl;
 
