@@ -190,6 +190,7 @@ void app_tester_c::launch(){
         // ERROR
     cmd_ok_work_er("RENAME");
     cmd_ok_work_er("RENAME fruits barva AS");
+    cmd_ok_work_er("RENAME fruits color AS barva");
     cmd_ok_work_er("RENAME fruits AS");
     cout << endl << SUCCESS_TEXT << ": " << UNDERLINE_FONT << "RENAME" << RESET_FONT << " working correctly!" << endl;
     cout << GREEN_COLOR << "========================================================================================================" << RESET_FONT << endl;
@@ -207,8 +208,10 @@ void app_tester_c::launch(){
     cout << endl << NOTE_TEXT << ": " << UNDERLINE_FONT << "PROJECTION" << RESET_FONT << " tester errors started" << endl << endl;
         // ERROR
     cmd_ok_work_er("PROJECTION");
-    cmd_ok_work_er("PROJECTION fruits_err OF ");
     cmd_ok_work_er("PROJECTION OF ");
+    cmd_ok_work_er("PROJECTION fruits_err OF ");
+    cmd_ok_work_er("PROJECTION fruits_err OF fruits [id,id]");
+    cmd_ok_work_er("PROJECTION fruits_err OF fruits []");
     
     cout << endl << SUCCESS_TEXT << ": " << UNDERLINE_FONT << "PROJECTION" << RESET_FONT << " working correctly!" << endl;
     cout << GREEN_COLOR << "========================================================================================================" << RESET_FONT << endl;
@@ -225,6 +228,11 @@ void app_tester_c::launch(){
     cmd_ok_work_ok("PRINT fruits_yellow_more_than_1_dollar");
     cout << endl << NOTE_TEXT << ": " << UNDERLINE_FONT << "SELECT" << RESET_FONT << " tester errors started" << endl << endl;
         // ERROR
+    cmd_ok_work_er("SELECT");
+    cmd_ok_work_er("SELECT fr_err OF , ( < )");
+    cmd_ok_work_er("SELECT fr_err OF fruits (123 > 123)");
+    cmd_ok_work_er("SELECT fr_err OF fruits (id 123)");
+    cmd_ok_work_er("SELECT fr err OF fruits (id > 123) table");
     cmd_ok_work_er("SELECT OF ( > )");
     cout << endl << SUCCESS_TEXT << ": " << UNDERLINE_FONT << "SELECT" << RESET_FONT << " working correctly!" << endl;
     cout << GREEN_COLOR << "========================================================================================================" << RESET_FONT << endl;

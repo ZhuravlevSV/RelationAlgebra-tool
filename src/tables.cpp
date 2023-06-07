@@ -150,6 +150,55 @@ void table_c::print() const{
     ifs.close();
 }
 
+bool table_c::is_valid_csv(const string& file_address){
+    // create ifs
+    ifstream ifs(WORKSPACE_FOLDER + file_address);
+    if(!ifs.is_open()) return false;
+
+    // compare number of ',' in all rows
+    size_t compare_count = 0;
+    string ifs_line;
+
+    while(getline(ifs, ifs_line)){
+        size_t pos = 0, count = 0;
+        // cycle while npos - not finded symbol ','
+        while((pos = ifs_line.find(',', pos)) != string::npos){
+            count++;
+            pos++;
+        }
+        if(count <= 0){
+            ifs.close();
+            return false;
+        }
+        if(compare_count == 0){
+            compare_count = count;
+            continue;
+        }
+        if(compare_count != count){
+            ifs.close();
+            return false;
+        }
+    }
+    if(compare_count == 0){
+        ifs.close();
+        return false;
+    }
+
+    // csv file is valid
+    ifs.close();
+    return true;
+}
+
+bool table_c::is_number(const string& text){
+    try{
+        stof(text);
+        return true;
+    }catch (const invalid_argument&){
+        return false;
+    }
+}
+
+
 // ==================================================
 
 tables_c::tables_c() {}
@@ -214,50 +263,3 @@ bool tables_c::print_table(const string& name) const{
 
 // ==================================================
 
-bool is_valid_csv(const string& file_address){
-    // create ifs
-    ifstream ifs(WORKSPACE_FOLDER + file_address);
-    if(!ifs.is_open()) return false;
-
-    // compare number of ',' in all rows
-    size_t compare_count = 0;
-    string ifs_line;
-
-    while(getline(ifs, ifs_line)){
-        size_t pos = 0, count = 0;
-        // cycle while npos - not finded symbol ','
-        while((pos = ifs_line.find(',', pos)) != string::npos){
-            count++;
-            pos++;
-        }
-        if(count <= 0){
-            ifs.close();
-            return false;
-        }
-        if(compare_count == 0){
-            compare_count = count;
-            continue;
-        }
-        if(compare_count != count){
-            ifs.close();
-            return false;
-        }
-    }
-    if(compare_count == 0){
-        ifs.close();
-        return false;
-    }
-
-    // csv file is valid
-    ifs.close();
-    return true;
-}
-
-bool is_number(const string& text){
-    try{
-        stof(text);
-        return true;
-    }catch (const invalid_argument&){
-        return false;
-    }
-}

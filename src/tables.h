@@ -41,6 +41,10 @@ public:
 
 private:
 
+    bool is_valid_csv(const string& file_address);
+
+    bool is_number(const string& text);
+
     string name;
     vector<header_cell_c> header;
 
@@ -65,12 +69,5 @@ private:
 
     map<string, shared_ptr<table_c>> tables_map;
 };
-
-// ===========================================================================
-// files functions
-
-bool is_valid_csv(const string& file_address);
-
-bool is_number(const string& text);
 
 #endif /* TABLES_H */
