@@ -3,13 +3,18 @@
 #include "app_tester.h"
 
 
-int main(void){
+int main(int argc, char* argv[]){
     
-    {
-    app_tester_c app_tester;
-    app_tester.launch();
+    // auto test
+    if(argc == 2){
+        string argument = argv[1];
+        if(argument == "test"){
+            app_tester_c app_tester;
+            app_tester.launch();
+        }
     }
-
+    
+    // application
     app_c app;
     app.launch();
 

@@ -7,7 +7,9 @@ void app_tester_c::print_start(){
 }
 
 void app_tester_c::print_finish(){
+    cout << SUCCESS_TEXT << ": All tests passed!" << endl;
     cout << SUCCESS_TEXT << ": Application tester finished!" << endl;
+    cout << GREEN_COLOR << "========================================================================================================" << RESET_FONT << endl;
     cout << endl;
 }
 
@@ -57,14 +59,24 @@ void app_tester_c::launch(){
 
     // main cycle
 
-    // Help tester
-    cmd_ok_work_ok("HELP");
+    // Help 
+    cout << endl;
+    cout << CYAN_COLOR << "========================================================================================================" << RESET_FONT << endl;
+    cout << NOTE_TEXT << ": " << UNDERLINE_FONT << "HELP" << RESET_FONT << " tester started" << endl;
+        // OK
     cmd_ok_work_ok("        HELP        ");
     cout << SUCCESS_TEXT << ": " << UNDERLINE_FONT << "HELP" << RESET_FONT << " working correctly!" << endl;
+    cout << GREEN_COLOR << "========================================================================================================" << RESET_FONT << endl;
+
 
     // Import tester
+    cout << CYAN_COLOR << "========================================================================================================" << RESET_FONT << endl;
+    cout << NOTE_TEXT << ": " << UNDERLINE_FONT << "IMPORT" << RESET_FONT << " tester started" << endl << endl;
+        // OK
     cmd_ok_work_ok("IMPORT fruits \"fruits.csv\"");
     cmd_ok_work_ok("     IMPORT       exporters      \"exporters.csv\"      ");
+    cout << endl << NOTE_TEXT << ": " << UNDERLINE_FONT << "IMPORT" << RESET_FONT << " tester errors started" << endl << endl;
+        // ERRORS
     cmd_ok_work_er("IMPORT err \"something.csv\"");
     cmd_ok_work_er("IMPORT err \"error1.csv\"");
     cmd_ok_work_er("IMPORT err \"error2.csv\"");
@@ -76,77 +88,158 @@ void app_tester_c::launch(){
     cmd_ok_work_er("IMPORT");
     cmd_ok_work_er("IMPORT err");
     cmd_ok_work_er("IMPORT err \"fruits.gif\"");
-    cout << SUCCESS_TEXT << ": " << UNDERLINE_FONT << "IMPORT" << RESET_FONT << " working correctly!" << endl;
+    cout << endl << SUCCESS_TEXT << ": " << UNDERLINE_FONT << "IMPORT" << RESET_FONT << " working correctly!" << endl;
+    cout << GREEN_COLOR << "========================================================================================================" << RESET_FONT << endl;
+
     
     // Print tester
+    cout << CYAN_COLOR << "========================================================================================================" << RESET_FONT << endl;
+    cout << NOTE_TEXT << ": " << UNDERLINE_FONT << "PRINT" << RESET_FONT << " tester started" << endl << endl;
+        // OK
     cmd_ok_work_ok("PRINT fruits");
+    cout << endl;
     cmd_ok_work_ok("     PRINT    exporters        ");
+    cout << endl << NOTE_TEXT << ": " << UNDERLINE_FONT << "PRINT" << RESET_FONT << " tester errors started" << endl << endl;
+        // ERRORS
     cmd_ok_work_er("PRINT");
     cmd_ok_work_er("PRINT   ");
     cmd_ok_work_er("PRINT   fruits exporters");
-    cout << SUCCESS_TEXT << ": " << UNDERLINE_FONT << "PRINT" << RESET_FONT << " working correctly!" << endl;
+    cout << endl << SUCCESS_TEXT << ": " << UNDERLINE_FONT << "PRINT" << RESET_FONT << " working correctly!" << endl;
+    cout << GREEN_COLOR << "========================================================================================================" << RESET_FONT << endl;
+
 
     // Export tester
+    cout << CYAN_COLOR << "========================================================================================================" << RESET_FONT << endl;
+    cout << NOTE_TEXT << ": " << UNDERLINE_FONT << "EXPORT" << RESET_FONT << " tester started" << endl << endl;
+        // OK
     cmd_ok_work_ok("EXPORT fruits \"test.csv\"");
     cmd_ok_work_ok("EXPORT fruits \"test.xml\"");
     cmd_ok_work_ok("EXPORT fruits \"test.json\"");
     cmd_ok_work_ok("EXPORT fruits \"test.csv\"");
     cmd_ok_work_ok("EXPORT fruits \"test.xml\"");
+    cout << endl << NOTE_TEXT << ": " << UNDERLINE_FONT << "EXPORT" << RESET_FONT << " tester errors started" << endl << endl;
+        // ERROR
     cmd_ok_work_er("EXPORT");
     cmd_ok_work_er("EXPORT fruits");
     cmd_ok_work_er("EXPORT fruits \"\"");
     cmd_ok_work_er("EXPORT fruits \"test_err.jpg\"");
-    cout << SUCCESS_TEXT << ": " << UNDERLINE_FONT << "EXPORT" << RESET_FONT << " working correctly!" << endl;
+    cout << endl << SUCCESS_TEXT << ": " << UNDERLINE_FONT << "EXPORT" << RESET_FONT << " working correctly!" << endl;
+    cout << GREEN_COLOR << "========================================================================================================" << RESET_FONT << endl;
+
 
     // Rename tester
+    cout << CYAN_COLOR << "========================================================================================================" << RESET_FONT << endl;
+    cout << NOTE_TEXT << ": " << UNDERLINE_FONT << "RENAME" << RESET_FONT << " tester started" << endl << endl;
+        // OK
     cmd_ok_work_ok("RENAME fruits color AS barva");
     cmd_ok_work_ok("    RENAME      fruits      price       AS          cena        ");
     cmd_ok_work_ok("PRINT fruits");
+    cout << endl << NOTE_TEXT << ": " << UNDERLINE_FONT << "RENAME" << RESET_FONT << " tester errors started" << endl << endl;
+        // ERROR
     cmd_ok_work_er("RENAME");
     cmd_ok_work_er("RENAME fruits barva AS");
     cmd_ok_work_er("RENAME fruits AS");
-    cout << SUCCESS_TEXT << ": " << UNDERLINE_FONT << "RENAME" << RESET_FONT << " working correctly!" << endl;
+    cout << endl << SUCCESS_TEXT << ": " << UNDERLINE_FONT << "RENAME" << RESET_FONT << " working correctly!" << endl;
+    cout << GREEN_COLOR << "========================================================================================================" << RESET_FONT << endl;
+
 
     // Projection tester
+    cout << CYAN_COLOR << "========================================================================================================" << RESET_FONT << endl;
+    cout << NOTE_TEXT << ": " << UNDERLINE_FONT << "PROJECTION" << RESET_FONT << " tester started" << endl << endl;
+        // OK
     cmd_ok_work_ok("PROJECTION fruits_2 OF fruits [barva,fruit,id,cena]");
+    cmd_ok_work_ok("PRINT fruits_2");
+    cout << endl;
     cmd_ok_work_ok("    PROJECTION      fruits_3    OF      fruits      [fruit,cena,barva]  ");
+    cmd_ok_work_ok("PRINT fruits_3");
+    cout << endl << NOTE_TEXT << ": " << UNDERLINE_FONT << "PROJECTION" << RESET_FONT << " tester errors started" << endl << endl;
+        // ERROR
     cmd_ok_work_er("PROJECTION");
     cmd_ok_work_er("PROJECTION fruits_err OF ");
     cmd_ok_work_er("PROJECTION OF ");
-    cmd_ok_work_ok("PRINT fruits_2");
-    cmd_ok_work_ok("PRINT fruits_3");
-    cout << SUCCESS_TEXT << ": " << UNDERLINE_FONT << "PROJECTION" << RESET_FONT << " working correctly!" << endl;
+    
+    cout << endl << SUCCESS_TEXT << ": " << UNDERLINE_FONT << "PROJECTION" << RESET_FONT << " working correctly!" << endl;
+    cout << GREEN_COLOR << "========================================================================================================" << RESET_FONT << endl;
+
 
     // Select tester
+    cout << CYAN_COLOR << "========================================================================================================" << RESET_FONT << endl;
+    cout << NOTE_TEXT << ": " << UNDERLINE_FONT << "SELECT" << RESET_FONT << " tester started" << endl << endl;
+        // OK
     cmd_ok_work_ok("SELECT fruits_yellow OF fruits_2 (barva = Yellow)");
+    cmd_ok_work_ok("PRINT fruits_yellow");
+    cout << endl;
     cmd_ok_work_ok("    SELECT      fruits_yellow_more_than_1_dollar    OF      fruits_yellow   (cena > 1)   ");
-    cmd_ok_work_er("SELECT OF ( > )");
     cmd_ok_work_ok("PRINT fruits_yellow_more_than_1_dollar");
-    cout << SUCCESS_TEXT << ": " << UNDERLINE_FONT << "PROJECTION" << RESET_FONT << " working correctly!" << endl;
+    cout << endl << NOTE_TEXT << ": " << UNDERLINE_FONT << "SELECT" << RESET_FONT << " tester errors started" << endl << endl;
+        // ERROR
+    cmd_ok_work_er("SELECT OF ( > )");
+    cout << endl << SUCCESS_TEXT << ": " << UNDERLINE_FONT << "SELECT" << RESET_FONT << " working correctly!" << endl;
+    cout << GREEN_COLOR << "========================================================================================================" << RESET_FONT << endl;
+
 
     // Natural join tester
-    cmd_ok_work_ok("NATURAL JOIN fruits_yellow_exporters_na_join FROM fruits_yellow_more_than_1_dollar, exporters");
-    cmd_ok_work_ok("    NATURAL     JOIN    fruits_yellow_exporters_na_join_2   FROM    fruits_yellow_more_than_1_dollar    ,   exporters   ");
-    cmd_ok_work_er("NATURAL JOIN FROM , ");
+    cout << CYAN_COLOR << "========================================================================================================" << RESET_FONT << endl;
+    cout << NOTE_TEXT << ": " << UNDERLINE_FONT << "NATURAL JOIN" << RESET_FONT << " tester started" << endl << endl;
+        // OK
+    cmd_ok_work_ok("    NATURAL     JOIN    fruits_yellow_exporters_na_join     FROM    fruits_yellow_more_than_1_dollar    ,   exporters   ");
     cmd_ok_work_ok("PRINT fruits_yellow_exporters_na_join");
-    cout << SUCCESS_TEXT << ": " << UNDERLINE_FONT << "NATURAL JOIN" << RESET_FONT << " working correctly!" << endl;
+    cout << endl << NOTE_TEXT << ": " << UNDERLINE_FONT << "NATURAL JOIN" << RESET_FONT << " tester errors started" << endl << endl;
+        // ERROR
+    cmd_ok_work_er("NATURAL JOIN FROM , ");
+    cmd_ok_work_er("NATURAL JOIN FROM");
+    cmd_ok_work_er("NATURAL");
+    cmd_ok_work_er("NATURAL JOIN ");
+    cmd_ok_work_er("NATURAL JOIN FROM fruits_err FROM fruits");
+    cout << endl << SUCCESS_TEXT << ": " << UNDERLINE_FONT << "NATURAL JOIN" << RESET_FONT << " working correctly!" << endl;
+    cout << GREEN_COLOR << "========================================================================================================" << RESET_FONT << endl;
+
 
     // Join tester
-    cmd_ok_work_ok("JOIN fruits_yellow_exporters_join FROM fruits_yellow_more_than_1_dollar, exporters ON id = id_fruit");
-    cmd_ok_work_ok("    JOIN    fruits_yellow_exporters_join_2    FROM    fruits_yellow_more_than_1_dollar  ,   exporters   ON      id      =   id_fruit    ");
-    cmd_ok_work_er("JOIN FROM  ,  ON  =  ");
+    cout << CYAN_COLOR << "========================================================================================================" << RESET_FONT << endl;
+    cout << NOTE_TEXT << ": " << UNDERLINE_FONT << "JOIN" << RESET_FONT << " tester started" << endl << endl;
+        // OK
+    cmd_ok_work_ok("    JOIN    fruits_yellow_exporters_join    FROM    fruits_yellow_more_than_1_dollar    ,   exporters   ON      id      =   id_fruit    ");
     cmd_ok_work_ok("PRINT fruits_yellow_exporters_join");
-    cout << SUCCESS_TEXT << ": " << UNDERLINE_FONT << "JOIN" << RESET_FONT << " working correctly!" << endl;
+    cout << endl << NOTE_TEXT << ": " << UNDERLINE_FONT << "JOIN" << RESET_FONT << " tester errors started" << endl << endl;
+        // ERROR
+    cmd_ok_work_er("JOIN FROM  ,  ON  =  ");
+    cmd_ok_work_er("JOIN ");
+    cmd_ok_work_er("JOIN FROM  ");
+    cmd_ok_work_er("JOIN fruits_err FROM fruits, exporters ON 123 = 123");
+    cmd_ok_work_er("JOIN fruits_err FROM fruits, exporters ON id = 123");
+    cout << endl << SUCCESS_TEXT << ": " << UNDERLINE_FONT << "JOIN" << RESET_FONT << " working correctly!" << endl;
+    cout << GREEN_COLOR << "========================================================================================================" << RESET_FONT << endl;
+
 
     // Multitask tester
+    cout << CYAN_COLOR << "========================================================================================================" << RESET_FONT << endl;
+    cout << NOTE_TEXT << ": " << UNDERLINE_FONT << "MULTITASK" << RESET_FONT << " tester started" << endl << endl;
+        // OK
     cmd_ok_work_ok("IMPORT people1 \"people1.csv\"");
     cmd_ok_work_ok("IMPORT people2 \"people2.csv\"");
+    cout << endl;
     cmd_ok_work_ok("PRINT people1");
+    cout << endl;
     cmd_ok_work_ok("PRINT people2");
-    cmd_ok_work_ok("MULTITASK people_cr FROM (people1 CROSS people2)");
-    cmd_ok_work_ok("    MULTITASK   people_in   FROM    people1     INTERSECT   people2     ");
-    cmd_ok_work_ok("    MULTITASK   people_ex   FROM (  people1     EXCEPT      people2    )");
-    cmd_ok_work_ok("MULTITASK people_un FROM people1 UNION people2");
+    cout << endl;
+    cmd_ok_work_ok("MULTITASK people_cross FROM (people1 CROSS people2)");
+    cout << endl;
+    cmd_ok_work_ok("PRINT people_cross");
+    cout << endl;
+    cmd_ok_work_ok("    MULTITASK   people_intersection   FROM    people1     INTERSECT   people2     ");
+    cout << endl;
+    cmd_ok_work_ok("PRINT people_intersection");
+    cout << endl;
+    cmd_ok_work_ok("    MULTITASK   people_exception   FROM (  people1     EXCEPT      people2    )");
+    cout << endl;
+    cmd_ok_work_ok("PRINT people_exception");
+    cout << endl;
+    cmd_ok_work_ok("MULTITASK people_union FROM people1 UNION people2");
+    cout << endl;
+    cmd_ok_work_ok("PRINT people_union");
+    cout << endl << NOTE_TEXT << ": " << UNDERLINE_FONT << "MULTITASK" << RESET_FONT << " tester errors started" << endl << endl;
+        // ERROR
     cmd_ok_work_er("MULTITASK people_cr_er FROM");
     cmd_ok_work_er("MULTITASK people_cr_er FROM     ");
     cmd_ok_work_er("MULTITASK people_cross_er FROM ( people1 CROSS people2");
@@ -157,32 +250,43 @@ void app_tester_c::launch(){
     cmd_ok_work_er("MULTITASK people_cross_er FROM ( ( people1 CROSS people2 )");
     cmd_ok_work_er("MULTITASK people_cross_er FROM ( people1 CROSS people2 ) )");
     cmd_ok_work_er("MULTITASK people_cross_er FROM ( ( people1 CROSS people2 ) )");
-    cmd_ok_work_ok("PRINT people_cr");
-    cmd_ok_work_ok("PRINT people_in");
-    cmd_ok_work_ok("PRINT people_ex");
-    cmd_ok_work_ok("PRINT people_un");
-    cout << SUCCESS_TEXT << ": " << UNDERLINE_FONT << "MULTITASK" << RESET_FONT << " working correctly!" << endl;
+    
+    cout << endl << SUCCESS_TEXT << ": " << UNDERLINE_FONT << "MULTITASK" << RESET_FONT << " working correctly!" << endl;
+    cout << GREEN_COLOR << "========================================================================================================" << RESET_FONT << endl;
+
 
     // SQL tester
+    cout << CYAN_COLOR << "========================================================================================================" << RESET_FONT << endl;
+    cout << NOTE_TEXT << ": " << UNDERLINE_FONT << "SQL" << RESET_FONT << " tester started" << endl << endl;
+        // OK
+    cout << endl << NOTE_TEXT << ": " << UNDERLINE_FONT << "SQL PRINT" << RESET_FONT << " tester started" << endl;
     cmd_ok_work_ok("TO SQL PRINT table");
     cmd_ok_work_ok("    TO      SQL     PRINT   table   ");
+    cout << NOTE_TEXT << ": " << UNDERLINE_FONT << "SQL RENAME" << RESET_FONT << " tester started" << endl;
     cmd_ok_work_ok("TO SQL RENAME table old_att AS new_att");
     cmd_ok_work_ok("    TO      SQL     RENAME      table   old_att     AS      new_att     ");
+    cout << NOTE_TEXT << ": " << UNDERLINE_FONT << "SQL PROJECTION" << RESET_FONT << " tester started" << endl;
     cmd_ok_work_ok("TO SQL PROJECTION new_table OF table_source [att1, att2, att3, att4]");
     cmd_ok_work_ok("    TO      SQL     PROJECTION      new_table   OF      table_source    [att1, att2, att3, att4]    ");
+    cout << NOTE_TEXT << ": " << UNDERLINE_FONT << "SQL SELECT" << RESET_FONT << " tester started" << endl;
     cmd_ok_work_ok("TO SQL SELECT new_table OF table_source (att = Yellow)");
     cmd_ok_work_ok("    TO      SQL     SELECT      new_table   OF    table_source    (att = 100)");
     cmd_ok_work_ok("TO SQL SELECT new_table OF table_source (att < 250)");
     cmd_ok_work_ok("TO SQL SELECT new_table OF table_source (att > 500)");
+    cout << NOTE_TEXT << ": " << UNDERLINE_FONT << "SQL NATURAL JOIN" << RESET_FONT << " tester started" << endl;
     cmd_ok_work_ok("TO SQL NATURAL JOIN new_table FROM table_source_1, table_source_2");
     cmd_ok_work_ok("    TO      SQL     NATURAL     JOIN    new_table   FROM    table_source_1  ,   table_source_2  ");
+    cout << NOTE_TEXT << ": " << UNDERLINE_FONT << "SQL JOIN" << RESET_FONT << " tester started" << endl;
     cmd_ok_work_ok("TO SQL JOIN new_table FROM table_source_1, table_source_2 ON att_1 = att_2");
     cmd_ok_work_ok("    TO      SQL     JOIN    new_table   FROM    table_source_1  ,   table_source_2      ON      att_1   =   att_2   ");
+    cout << NOTE_TEXT << ": " << UNDERLINE_FONT << "SQL MULTITASK" << RESET_FONT << " tester started" << endl;
     cmd_ok_work_ok("TO SQL MULTITASK new_table FROM (source_table_1 CROSS source_table_2)");
     cmd_ok_work_ok("    TO      SQL     MULTITASK   new_table   FROM       source_table_1      INTERSECT   source_table_2     ");
     cmd_ok_work_ok("TO SQL MULTITASK new_table FROM (source_table_1 EXCEPT source_table_2)");
     cmd_ok_work_ok("TO SQL MULTITASK new_table FROM source_table_1 UNION source_table_2");
     cmd_ok_work_ok("TO SQL MULTITASK new_table FROM ((source_table_1 UNION source_table_2 EXCEPT source_table_3) INTERSECT (source_table_4 CROSS source_table_5)) EXCEPT source_table_6 EXCEPT source_table_7");    
+    cout << endl << NOTE_TEXT << ": " << UNDERLINE_FONT << "SQL MULTITASK" << RESET_FONT << " tester errors started" << endl << endl;
+        // ERROR
     cmd_ok_work_er("TO SQL MULTITASK new_table FROM");
     cmd_ok_work_er("TO SQL MULTITASK new_table FROM    ");
     cmd_ok_work_er("TO SQL MULTITASK new_table FROM ( source_table_1 CROSS source_table_2");
@@ -194,10 +298,7 @@ void app_tester_c::launch(){
     cmd_ok_work_er("TO SQL MULTITASK new_table FROM ( source_table_1 CROSS source_table_2 ) )");
     cmd_ok_work_er("TO SQL MULTITASK new_table FROM ( ( source_table_1 CROSS source_table_2 		) )");
     cmd_ok_work_er("TO SQL MULTITASK new_table FROM ( ( ) )");
-    cout << SUCCESS_TEXT << ": " << UNDERLINE_FONT << "SQL" << RESET_FONT << " working correctly!" << endl;
-    cout << endl;
-    cout << SUCCESS_TEXT << ": all tests passed!" << endl;
-
+    cout << endl << SUCCESS_TEXT << ": " << UNDERLINE_FONT << "SQL" << RESET_FONT << " working correctly!" << endl;
 
     // end program
     print_finish();
