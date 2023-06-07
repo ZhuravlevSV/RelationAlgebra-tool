@@ -24,19 +24,29 @@
 
 using namespace std;
 
+/// @brief Selector to define command format and type from command text
 class selector_c{
 public:
 
+    /// @brief Possible formats
     enum class format_e {RA, SQL, UNDEFINED};
     
+    /// @brief Possible types
     enum class type_e {IMPORT, EXPORT, HELP, PRINT, RENAME, PROJECTION, SELECTION, NATURAL_JOIN, JOIN, MULTITASK, UNDEFINED};
 
+    /// @brief Method for define command format from command text
+    /// @param cmd_text Command text
+    /// @return Current command format
     format_e define_format(string& cmd_text);
 
+    /// @brief Method for define command type from command text
+    /// @param cmd_text Command text
+    /// @return Current command type
     type_e define_type(string& cmd_text);
 
 private:
 
+    /// @brief Map of possible command types
     map<string, selector_c::type_e> types_map = {
         {"IMPORT", type_e::IMPORT},
         {"EXPORT", type_e::EXPORT},
@@ -51,27 +61,44 @@ private:
         };
 };
 
+/// @brief Manager of application to execute input commands
 class manager_c{
 public:
 
+    /// @brief Read command from input
+    /// @param cmd_text Command text
+    /// @return TRUE - if command is received from input, FALSE - otherwise
     bool read_cmd(string& cmd_text);
 
+    /// @brief Getter of existing tables
+    /// @return Tables
     tables_c& get_tables();
 
+    /// @brief Setter of current command
+    /// @param cmd_text Command text
+    /// @return Smart pointer for an specific command
     unique_ptr<cmd_c> set_cmd(string& cmd_text);
 
+    /// @brief Selector to define command format and type from command text
     selector_c selector;
 
 private:
 
+    /// @brief Existing tables
     tables_c tables;
 };
 
+/// @brief Class to define specific command
 class cmd_factory{
 public:
+
+    /// @brief Method that determines command
+    /// @param format Format of current command
+    /// @param type Type of current command
+    /// @param cmd_text Command text
+    /// @return Smart pointer for a command
     static unique_ptr<cmd_c> create_cmd(selector_c::format_e format, selector_c::type_e type, const string& cmd_text);
     
 };
-
 
 #endif /* MANAGER_H */

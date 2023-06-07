@@ -89,6 +89,7 @@ private:
 /// @brief Class to define application type
 class app_factory_c{
 public:
+
     /// @brief Method that determines the application type
     /// @param argc Number of arguments
     /// @param argv Arguments
