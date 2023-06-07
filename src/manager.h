@@ -4,6 +4,23 @@
 #include "config.h"
 #include "tables.h"
 #include "cmd.h"
+#include "commands/ra/cmd_ra_import.h"
+#include "commands/ra/cmd_ra_export.h"
+#include "commands/ra/cmd_ra_help.h"
+#include "commands/ra/cmd_ra_print.h"
+#include "commands/ra/cmd_ra_rename.h"
+#include "commands/ra/cmd_ra_projection.h"
+#include "commands/ra/cmd_ra_selection.h"
+#include "commands/ra/cmd_ra_natural_join.h"
+#include "commands/ra/cmd_ra_join.h"
+#include "commands/ra/cmd_ra_multitask.h"
+#include "commands/sql/cmd_sql_print.h"
+#include "commands/sql/cmd_sql_rename.h"
+#include "commands/sql/cmd_sql_projection.h"
+#include "commands/sql/cmd_sql_selection.h"
+#include "commands/sql/cmd_sql_natural_join.h"
+#include "commands/sql/cmd_sql_join.h"
+#include "commands/sql/cmd_sql_multitask.h"
 
 using namespace std;
 
